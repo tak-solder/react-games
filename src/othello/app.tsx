@@ -1,16 +1,17 @@
 import './app.scss';
 import {render} from "react-dom";
 import * as React from 'react';
+import Board from "./Components/Board/Board";
 
 const App = () => {
   return (
     <div>
-      Hello World!
+      <Board/>
     </div>
   );
 };
 
 render(
   <App />,
-  document.querySelector('.sample')
+  document.querySelector('#app')
 );

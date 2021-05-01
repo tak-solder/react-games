@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
   const config = {
     mode: MODE,
     entry: {
-      sample: './src/sample/app.tsx',
+      othello: './src/othello/app.tsx',
     },
     output: {
       filename: '[name]/app.js',
@@ -42,7 +42,8 @@ module.exports = (env, argv) => {
               loader: "css-loader",
               options: {
                 sourceMap: isDevelop,
-                importLoaders: 2
+                importLoaders: 2,
+                url: false,
               }
             },
             {
@@ -79,7 +80,7 @@ module.exports = (env, argv) => {
     devServer: {
       contentBase: path.resolve(__dirname, 'public'),
       contentBasePublicPath: '/',
-      openPage: 'sample/index.html',
+      openPage: 'othello/index.html',
       overlay: true,
     },
 

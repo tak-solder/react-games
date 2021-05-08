@@ -1,15 +1,35 @@
 .Board {
-  .Board-Field {
-    width: 80%;
-    margin: 0 auto;
-    position: relative;
-    background: #000;
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+  border-collapse: collapse;
+
+  .Board-index {
+    text-align: center;
+    vertical-align: middle;
+
+    &_row {
+      text-align: right;
+      vertical-align: middle;
+      padding-right: 8px;
+    }
+    &_column {
+      text-align: center;
+      vertical-align: bottom;
+      line-height: 1em;
+      padding-bottom: 8px;
+    }
   }
 
   .Board-Cell {
-    width: (100% / 8);
+    width: 12%;
+    border: 2px solid #000;
     background: darkgreen;
     position: relative;
+
+    &_latest {
+      background: #71b73d;
+    }
 
     &:after {
       content: '';

@@ -1,0 +1,31 @@
+.Status {
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+  border-collapse: collapse;
+
+  .Status-Player {
+    &_turn {
+      .Status-Player-Name,
+      .Status-Player-Count {
+        background: #fff5c4;
+      }
+    }
+
+    .Status-Player-Name,
+    .Status-Player-Count {
+      border: 1px solid #000;
+      padding: 4px 8px;
+    }
+
+
+    .Status-Player-Name {
+      width: 240px;
+    }
+
+    .Status-Player-Count {
+      width: 60px;
+      text-align: right;
+    }
+  }
+}

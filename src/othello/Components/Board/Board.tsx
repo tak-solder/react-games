@@ -1,77 +1,45 @@
 import './Board.scss';
 import * as React from 'react';
-import {useState} from "react";
+import * as Types from "../../Types";
+import Cell from "./Cell";
 
-const defaultCells = [
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, -1, 1, 0, 0, 0],
-  [0, 0, 0, 1, -1, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-];
+type Props = {
+  cells: Types.field;
+  setCell: (row: number, column: number) => boolean;
+  latestHand: Types.latestHand
+}
 
-const Board = () => {
-  return (
-    <div className="Board">
-
-      <Field/>
-    </div>
-  );
-};
-
-const Field = () => {
-  const [cells, setCells] = useState(defaultCells);
-
-  return (
-  <table className="Board-Field">
+const Board: React.FC<Props> = ({cells, setCell, latestHand}) => (
+  <table className="Board">
     <tbody>
-    {cells.map((row, i) => (
+    <tr>
+      <td/>
+      {'abcdefgh'.split('').map(index => (
+        <td key={index}
+            className="Board-index Board-index_column"
+        >
+          {index}
+        </td>
+      ))}
+    </tr>
+    {cells.map((row: number[], i: number) => (
       <tr key={i}>
-        {row.map((column, s) => (
+        <td className="Board-index Board-index_row">{i + 1}</td>
+        {row.map((column: number, s: number) => (
           <Cell key={s}
                 territory={column}
                 onClick={() => {
-                  const newCells = cells.slice();
-                  newCells[i][s] = 1;
-                  setCells(newCells);
+                  if (!setCell(i, s)) {
+                    alert('そこには置けないよ');
+                  }
                 }}
+                latest={latestHand.cell.row === i && latestHand.cell.column === s}
           />
         ))}
       </tr>
     ))}
     </tbody>
   </table>
-)};
-
-type CellProps = {
-  territory: number;
-  onClick: () => void;
-}
-const Cell = ({territory, onClick}: CellProps) => {
-  const classNames = ['Board-Stone'];
-
-  if (territory === 0) {
-    return (
-      <td className="Board-Cell"
-          onClick={onClick}
-      />
-    );
-  }
-
-  if (territory > 0) {
-    classNames.push('Board-Stone_Black');
-  } else if (territory < 0) {
-    classNames.push('Board-Stone_White');
-  }
-  return (
-    <td className="Board-Cell">
-      <div className={classNames.join(' ')} />
-    </td>
-  );
-};
-
+);
 
 export default Board;

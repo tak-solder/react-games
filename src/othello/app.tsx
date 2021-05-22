@@ -4,8 +4,8 @@ import * as React from 'react';
 import {FC, useState, Fragment} from "react";
 import Board from "./Components/Board/Board";
 import Status from "./Components/Status/Status";
-import {Player, Directions} from "./Defines";
-import {field} from "./Types";
+import * as Defines from "./Defines";
+import * as Types from "./Types";
 
 const defaultField = [
   [0, 0, 0, 0, 0, 0, 0, 0],

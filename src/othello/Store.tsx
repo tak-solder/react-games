@@ -16,18 +16,22 @@ const defaultBoard: Types.Board = [
 const initialState: Types.State = {
   board: defaultBoard,
   histories: [],
-  player: null
-
-}
+  player: null,
+  finished: false,
+};
 
 // createSliceでreducerとactionを同時に定義
 const slice = createSlice({
-  name: 'board',
+  name: 'game',
   initialState,
   reducers: {
-    putDisc: (state, action: PayloadAction<Types.Position>) => ({
-      ...state,
-      count: state.count + action.payload,
-    }),
+    putDisc: (state, action: PayloadAction<Types.Position>) => {
+      return {
+        board: defaultBoard,
+        histories: [],
+        player: null,
+        finished: false,
+      };
+    },
   },
 })

@@ -1,31 +1,33 @@
-import * as Defines from './Defines';
-
-type Player = typeof Defines.Player[keyof typeof Defines.Player];
-type Disc = typeof Defines.Disc[keyof typeof Defines.Disc];
-
-const Index: Array<number> = [0, 1, 2, 3, 4, 5, 6, 7];
-type Index = [0, 1, 2, 3, 4, 5, 6, 7];
+type Player = -1 | 1;
+type Disc = -1 | 0 | 1;
 
 type Line = [Disc, Disc, Disc, Disc, Disc, Disc, Disc, Disc];
 type Board = [Line, Line, Line, Line, Line, Line, Line, Line];
 
+type Index = [0, 1, 2, 3, 4, 5, 6, 7];
 type Position = {
-  xIndex: Index,
-  yIndex: Index,
+  // xIndex: Index,
+  // yIndex: Index,
+  xIndex: number,
+  yIndex: number,
 };
 
-type Log = {
+type Direction = [
+    -1 | 0 | 1,
+    -1 | 0 | 1
+];
+
+type History = {
   player: Player,
   position: Position,
 };
 
-type LogHistories = Array<History>;
-
 type State = {
   board: Board,
-  histories: LogHistories,
+  histories: Array<History>,
   player: Player | null,
+  finished: boolean,
 };
 
 
-export {Player, Disc, Index, Board, Position, Log, LogHistories, State};
+export {Player, Disc, Index, Board, Direction, Position, History, State};

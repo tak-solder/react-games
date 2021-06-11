@@ -4,7 +4,10 @@ import * as React from 'react';
 import {FC, useState, Fragment} from "react";
 import Board from "./Components/Board/Board";
 import Status from "./Components/Status/Status";
-import * as Defines from "./Defines";
+import History from "./Components/History/History";
+import {Provider, useSelector} from "react-redux";
+import store from "./Store";
+import {State} from "./Store";
 import * as Types from "./Types";
 
 const defaultField = [
@@ -19,25 +22,17 @@ const defaultField = [
 ];
 
 const App: FC = () => {
-  const [latestHand, updateHand] = useState({
-    player: 0,
-    cell: {
-      row: 0,
-      column: 0,
-    },
-  });
-  const [cells, updateCells] = useState<field>(defaultField);
-  const [turnPlayer, updatePlayer] = useState<number>(Player.Black);
-  const [finished, updateFinished] = useState<boolean>(false);
+  const finished = useSelector((state: State) => state.finished);
 
   return (
     <Fragment>
       <div className="App">
         <div className="App-board">
-          <Board cells={cells} setCell={setCell} latestHand={latestHand}/>
+          <Board/>
         </div>
         <div className="App-status">
-          <Status cells={cells} turnPlayer={turnPlayer}/>
+          <Status/>
+          <History/>
         </div>
       </div>
       {finished && (
@@ -50,6 +45,8 @@ const App: FC = () => {
 };
 
 render(
-  <App/>,
+  <Provider store={store}>
+    <App/>
+  </Provider>,
   document.querySelector('#app')
 );

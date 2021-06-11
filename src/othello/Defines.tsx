@@ -34,4 +34,9 @@ const Directions: Array<Types.Direction> = [
   [-1, -1],
 ];
 
-export {Player, Cell, Directions};
+const IndexStr = {
+  x: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
+  y: ['1', '2', '3', '4', '5', '6', '7', '8'],
+};
+
+export {Player, Cell, Directions, IndexStr};

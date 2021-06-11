@@ -1,16 +1,16 @@
 import * as React from "react";
-import Stone from "./Stone";
+import Disc from "./Disc";
 
 type Props = {
-  territory: number;
+  disc: number;
   onClick: () => void;
-  latest: boolean
+  recent: boolean
 }
 
-const Cell: React.FC<Props> = ({territory, onClick, latest}) => {
+const Cell: React.FC<Props> = ({disc, onClick, recent}) => {
   const classNames = ['Board-Cell'];
 
-  if (territory === 0) {
+  if (disc === 0) {
     return (
       <td className={classNames.join(' ')}
           onClick={onClick}
@@ -18,13 +18,13 @@ const Cell: React.FC<Props> = ({territory, onClick, latest}) => {
     );
   }
 
-  if (latest) {
-    classNames.push('Board-Cell_latest')
+  if (recent) {
+    classNames.push('Board-Cell_recent')
   }
 
   return (
     <td className={classNames.join(' ')}>
-      <Stone territory={territory}/>
+      <Disc disc={disc}/>
     </td>
   );
 };

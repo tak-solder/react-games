@@ -1,45 +1,47 @@
 import './Board.scss';
 import * as React from 'react';
-import * as Types from "../../Types";
+import {useDispatch, useSelector} from 'react-redux'
+import * as Defines from "../../Defines";
 import Cell from "./Cell";
+import {State, putDisc} from "../../Store";
 
-type Props = {
-  cells: Types.field;
-  setCell: (row: number, column: number) => boolean;
-  latestHand: Types.latestHand
-}
+const Board: React.FC = () => {
+  const board = useSelector((state: State) => state.board);
+  const recentPosition = useSelector((state: State) => state.histories[0])?.position;
+  const dispatch = useDispatch();
 
-const Board: React.FC<Props> = ({cells, setCell, latestHand}) => (
-  <table className="Board">
-    <tbody>
-    <tr>
-      <td/>
-      {'abcdefgh'.split('').map(index => (
-        <td key={index}
-            className="Board-index Board-index_column"
-        >
-          {index}
-        </td>
-      ))}
-    </tr>
-    {cells.map((row: number[], i: number) => (
-      <tr key={i}>
-        <td className="Board-index Board-index_row">{i + 1}</td>
-        {row.map((column: number, s: number) => (
-          <Cell key={s}
-                territory={column}
-                onClick={() => {
-                  if (!setCell(i, s)) {
-                    alert('そこには置けないよ');
-                  }
-                }}
-                latest={latestHand.cell.row === i && latestHand.cell.column === s}
-          />
+  console.log(JSON.stringify(board));
+
+  return (
+    <table className="Board">
+      <tbody>
+      <tr>
+        <td/>
+        {Defines.IndexStr.x.map(index => (
+          <td key={index}
+              className="Board-index Board-index_column"
+          >
+            {index}
+          </td>
         ))}
       </tr>
-    ))}
-    </tbody>
-  </table>
-);
+      {board.map((row: number[], y: number) => (
+        <tr key={y}>
+          <td className="Board-index Board-index_row">{y + 1}</td>
+          {row.map((column: number, x: number) => (
+            <Cell key={x}
+                  disc={column}
+                  onClick={() => {
+                    dispatch(putDisc({x, y}))
+                  }}
+                  recent={recentPosition && recentPosition.x === x && recentPosition.y === y}
+            />
+          ))}
+        </tr>
+      ))}
+      </tbody>
+    </table>
+  );
+};
 
 export default Board;

@@ -1,0 +1,42 @@
+.History {
+  box-sizing: border-box;
+  width: 90%;
+  margin: 30px auto 0;
+  padding: 0;
+  height: 300px;
+  border: 1px solid #000;
+  overflow: hidden;
+
+  .History-Item {
+    list-style: decimal inside;
+    padding: 2px 8px;
+
+    &_Black {
+      &:before {
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image: url("/othello/black.svg");
+        background-size: contain;
+        vertical-align: middle;
+        margin-right: 4px;
+      }
+    }
+
+    &_White {
+      background: #aaa;
+
+      &:before {
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image: url("/othello/white.svg");
+        background-size: contain;
+        vertical-align: middle;
+        margin-right: 4px;
+      }
+    }
+  }
+}

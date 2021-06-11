@@ -27,7 +27,7 @@
     background: darkgreen;
     position: relative;
 
-    &_latest {
+    &_recent {
       background: #71b73d;
     }
 
@@ -37,7 +37,7 @@
       margin-top: 100%;
     }
 
-    .Board-Stone {
+    .Board-Disc {
       position: absolute;
       top: 0;
       bottom: 0;

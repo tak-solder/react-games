@@ -1,17 +1,14 @@
 import './Status.scss';
 import * as React from 'react';
-import * as Types from "../../Types";
 import Player from "./Player";
 import * as Defines from "../../Defines";
+import {useSelector} from "react-redux";
+import {State} from "../../Store";
+import {countDisc} from "../../Logic";
 
-type Props = {
-  cells: Types.field;
-  turnPlayer: number;
-}
-
-const Status: React.FC<Props> = ({cells, turnPlayer}) => {
-  const count = (player: number) => cells.map(row => row.filter(color => color === player).length)
-    .reduce((sum, length) => sum + length);
+const Status: React.FC = () => {
+  const board = useSelector((state: State) => state.board);
+  const turnPlayer = useSelector((state: State) => state.player);
 
   return (
     <table className="Status">
@@ -19,8 +16,8 @@ const Status: React.FC<Props> = ({cells, turnPlayer}) => {
       {Object.values(Defines.Player).map(player => (
         <Player key={player}
                 player={player}
-                count={count(player)}
-                ownTurn={player === turnPlayer}
+                count={countDisc(board, player)}
+                ownTurn={turnPlayer === player}
         />
       ))}
       </tbody>

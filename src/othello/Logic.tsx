@@ -3,21 +3,24 @@ import * as Types from "./Types";
 
 const canReverse = (board: Types.Board, player: Types.Player, position: Types.Position, [x, y]: Types.Direction): boolean => {
   const opponent: Types.Player = player * -1 as Types.Player;
-  if (position.yIndex + y < 0 || position.xIndex + x < 0) {
+  if (position.y + y < 0 || position.x + x < 0) {
     return false;
   }
-  if (board[position.yIndex + y][position.xIndex + x] !== opponent) {
+  if (!board[position.y + y] || board[position.y + y][position.x + x] !== opponent) {
     return false;
   }
   for (let i = 2; true; i++) {
-    if (position.yIndex + (y * i) < 0 || position.xIndex + (x * i) < 0) {
+    const posX = position.x + (x * i);
+    const posY = position.y + (y * i);
+    if (!board[posY]) {
       return false;
     }
-    const cell = board[position.yIndex + (y * i)][position.xIndex + (x * i)];
+
+    const cell = board[posY][posX];
     if (cell === player) {
       return true;
     }
-    if (cell !== Defines.Cell.Empty) {
+    if (cell !== opponent) {
       return false;
     }
   }
@@ -27,54 +30,49 @@ const canPut = (board: Types.Board, player: Types.Player, position: Types.Positi
   return !!Defines.Directions.find(direction => canReverse(board, player, position, direction));
 };
 
-const putableCellExists = (board: Types.Board, player: Types.Player): boolean =>
-  board.some((line, yIndex) =>
-    line.some((disc, xIndex) =>
-      disc === 0 && canPut(board, player, {xIndex: xIndex, yIndex}))
+const putableCellExists = (board: Types.Board, player: Types.Player): boolean => {
+  return board.some((line, y) =>
+    line.some((disc, x) =>
+      disc === 0 && canPut(board, player, {x, y}))
   );
+}
 
-const reverse = (board: Types.Board, player: Types.Player, position: Types.Position): Types.Board => {
-  Defines.Directions.filter(direction => canReverse(board, player, position, direction))
-    .forEach(([y, x]: Array<number>) => {
-      const opponent = player * -1;
+
+const putDisc = (board: Types.Board, player: Types.Player, position: Types.Position): Types.Board | null => {
+  if (board[position.y][position.x] !== 0 || !canPut(board, player, position)) {
+    return null;
+  }
+
+  const newBoard: Types.Board = board.map(row => row.slice()) as Types.Board;
+  newBoard[position.y][position.x] = player;
+
+  Defines.Directions.filter(direction => canReverse(newBoard, player, position, direction))
+    .forEach(([x, y]: Array<number>) => {
+      const opponent: Types.Player = player * -1 as Types.Player;
       for (let i = 1; true; i++) {
-        const cell = board[row + (y * i)][column + (x * i)];
+        const posX = position.x + (x * i);
+        const posY = position.y + (y * i);
+        if (!board[posY]) {
+          return false;
+        }
+
+        const cell = board[posY][posX];
         if (cell === opponent) {
-          board[row + (y * i)][column + (x * i)] = player;
-        } else {
+          newBoard[posY][posX] = player;
+        } else if (cell === player) {
           return;
+        } else {
+          throw "処理エラー";
         }
       }
-    })
-  return board
-};
+    });
 
-
-const putDisc = (board: Types.Board, player: Types.Player, position: Types.Position): boolean => {
-  if (board[row][column] !== 0 || !canPut(board, turnPlayer, row, column)) {
-    return false;
-  }
-
-  const newboard = board.map(row => row.slice());
-  newboard[row][column] = turnPlayer;
-  reverse(newboard, turnPlayer, row, column);
-
-  updateboard(newboard);
-  updateHand({
-    player: turnPlayer,
-    cell: {
-      row,
-      column
-    }
-  });
-
-  const nextPlayer = turnPlayer * -1;
-  if (putableCellExists(newCells, nextPlayer)) {
-    updatePlayer(nextPlayer);
-  } else if (!putableCellExists(newCells, turnPlayer)) {
-    updatePlayer(0);
-    updateFinished(true);
-  }
-
-  return true;
+  return newBoard;
 }
+
+const countDisc = (board: Types.Board, player: Types.Player) => {
+  return board.map(row => row.filter(disc => disc === player).length)
+    .reduce((sum, length) => sum + length);
+}
+
+export {canReverse, canPut, putableCellExists, putDisc, countDisc};

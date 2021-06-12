@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
   const config = {
     mode: MODE,
     entry: {
-      sample: './src/sample/app.tsx',
+      othello: './src/othello/app.tsx',
     },
     output: {
       filename: '[name]/app.js',
@@ -41,8 +41,10 @@ module.exports = (env, argv) => {
             {
               loader: "css-loader",
               options: {
+                modules: true,
                 sourceMap: isDevelop,
-                importLoaders: 2
+                importLoaders: 2,
+                url: false,
               }
             },
             {
@@ -73,13 +75,12 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: '[name]/app.css',
       }),
-      require("autoprefixer"),
     ],
 
     devServer: {
       contentBase: path.resolve(__dirname, 'public'),
       contentBasePublicPath: '/',
-      openPage: 'sample/index.html',
+      openPage: 'othello/index.html',
       overlay: true,
     },
 

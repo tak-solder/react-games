@@ -41,6 +41,7 @@ module.exports = (env, argv) => {
             {
               loader: "css-loader",
               options: {
+                modules: true,
                 sourceMap: isDevelop,
                 importLoaders: 2,
                 url: false,
@@ -74,7 +75,6 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: '[name]/app.css',
       }),
-      require("autoprefixer"),
     ],
 
     devServer: {

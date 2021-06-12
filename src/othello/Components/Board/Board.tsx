@@ -1,4 +1,4 @@
-import './Board.scss';
+import styles from './Board.scss';
 import * as React from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import * as Defines from "../../Defines";
@@ -13,13 +13,13 @@ const Board: React.FC = () => {
   console.log(JSON.stringify(board));
 
   return (
-    <table className="Board">
+    <table className={styles.Board}>
       <tbody>
       <tr>
         <td/>
         {Defines.IndexStr.x.map(index => (
           <td key={index}
-              className="Board-index Board-index_column"
+              className={styles.Index_column}
           >
             {index}
           </td>
@@ -27,7 +27,7 @@ const Board: React.FC = () => {
       </tr>
       {board.map((row: number[], y: number) => (
         <tr key={y}>
-          <td className="Board-index Board-index_row">{y + 1}</td>
+          <td className={styles.Index_row}>{y + 1}</td>
           {row.map((column: number, x: number) => (
             <Cell key={x}
                   disc={column}

@@ -1,16 +1,17 @@
 import * as React from "react";
+import styles from './Board.scss';
 
 type Props = {
   disc: number;
 }
 
 const Disc: React.FC<Props> = ({disc}) => {
-  const classNames = ['Board-Disc'];
+  const classNames = [styles.Disc];
 
   if (disc > 0) {
-    classNames.push('Board-Disc_Black');
+    classNames.push(styles.Disc_Black);
   } else if (disc < 0) {
-    classNames.push('Board-Disc_White');
+    classNames.push(styles.Disc_White);
   } else {
     return null;
   }

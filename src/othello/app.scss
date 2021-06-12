@@ -3,24 +3,24 @@
   display: flex;
   flex-wrap: wrap;
 
-  .App-status {
+  .Status {
     align-self: center;
     width: 300px;
     margin: 20px auto;
   }
-  .App-board {
+  .Board {
     flex: 1;
     min-width: 480px;
   }
-}
 
-.App-finished {
-  position: absolute;
-  width: 200px;
-  height: 80px;
-  line-height: 80px;
-  text-align: center;
-  top: calc(50% - 40px);
-  left: calc(50% - 100px);
-  background: rgba(255, 255, 255, 0.7);
+  .Finished {
+    position: absolute;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    top: calc(50% - 40px);
+    left: calc(50% - 100px);
+    background: rgba(255, 255, 255, 0.7);
+  }
 }

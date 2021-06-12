@@ -1,5 +1,6 @@
 import * as React from "react";
 import Disc from "./Disc";
+import styles from './Board.scss';
 
 type Props = {
   disc: number;
@@ -8,7 +9,7 @@ type Props = {
 }
 
 const Cell: React.FC<Props> = ({disc, onClick, recent}) => {
-  const classNames = ['Board-Cell'];
+  const classNames = [styles.Cell];
 
   if (disc === 0) {
     return (
@@ -19,7 +20,7 @@ const Cell: React.FC<Props> = ({disc, onClick, recent}) => {
   }
 
   if (recent) {
-    classNames.push('Board-Cell_recent')
+    classNames.push(styles.Cell_recent)
   }
 
   return (

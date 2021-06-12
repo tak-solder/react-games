@@ -1,4 +1,3 @@
-import './app.scss';
 import {render} from "react-dom";
 import * as React from 'react';
 import {FC, useState, Fragment} from "react";
@@ -8,7 +7,7 @@ import History from "./Components/History/History";
 import {Provider, useSelector} from "react-redux";
 import store from "./Store";
 import {State} from "./Store";
-import * as Types from "./Types";
+import styles from './app.scss';
 
 const defaultField = [
   [0, 0, 0, 0, 0, 0, 0, 0],
@@ -26,17 +25,17 @@ const App: FC = () => {
 
   return (
     <Fragment>
-      <div className="App">
-        <div className="App-board">
+      <div className={styles.App}>
+        <div className={styles.Board}>
           <Board/>
         </div>
-        <div className="App-status">
+        <div className={styles.Status}>
           <Status/>
           <History/>
         </div>
       </div>
       {finished && (
-        <div className="App-finished">
+        <div className={styles.Finished}>
           ゲーム終了
         </div>
       )}

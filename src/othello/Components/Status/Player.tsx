@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as Defines from "../../Defines";
+import styles from './Status.scss';
 
 type Props = {
   player: number;
@@ -8,9 +9,9 @@ type Props = {
 }
 
 const Player: React.FC<Props> = ({player, count, ownTurn}) => {
-  const classNames = ['Status-Player'];
+  const classNames = [styles.Player];
   if (ownTurn) {
-    classNames.push('Status-Player_turn')
+    classNames.push(styles.Player_turn)
   }
 
   const playerStr = player === Defines.Player.Black
@@ -19,10 +20,10 @@ const Player: React.FC<Props> = ({player, count, ownTurn}) => {
 
   return (
     <tr className={classNames.join(' ')}>
-      <td className='Status-Player-Name'>
+      <td className={styles.Name}>
         {playerStr}
       </td>
-      <td className='Status-Player-Count'>
+      <td className={styles.Count}>
         {count}個
       </td>
     </tr>
